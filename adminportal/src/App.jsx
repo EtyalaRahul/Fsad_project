@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-import Navbar from './Components/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductCard from './Components/ProductCard';
 import Home from './Components/Home';
@@ -12,6 +11,7 @@ import Decoratives from './Components/Decoratives';
 import Electronics from './Components/Electronics';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
+import Navbar from './Components/NavBar';
 
 function App() {
   // States for different product categories

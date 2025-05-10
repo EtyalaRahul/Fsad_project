@@ -1,71 +1,156 @@
-import React from 'react';
-import './Signup.css'; // Assuming you have a CSS file for styling
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Signup.css';
+
 const Signup = () => {
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        email: '',
+        fullname: '',
+        phonenumber: '',
+        dateofbirth: '',
+        gender: '',
+        address: '',
+        password: '',
+        role: 'USER'
+    });
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setLoading(true);
+
+        try {
+            const response = await fetch('http://localhost:8080/auth/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    phonenumber: parseInt(formData.phonenumber)
+                })
+            });
+
+            const data = await response.text();
+
+            if (response.ok) {
+                alert('Registration successful!');
+                navigate('/login');
+            } else {
+                throw new Error(data || 'Registration failed');
+            }
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <div className='signup'>
-            <h1>Signup</h1>
-            <form>
-                <div className='form-group'>
-                    <label htmlFor="name">Full Name:</label>
-                    <input type="text" id="name" name="name" required />
-                </div>
-
-                <div className='form-group'>
+        <div className="signup">
+            <h1>Sign Up</h1>
+            {error && <div className="error-message">{error}</div>}
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
                     <label htmlFor="email">Email:</label>
-                    <input type="email" id="email" name="email" required />
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
-
-                <div className='form-group'>
-                    <label htmlFor="phone">Phone Number:</label>
-                    <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required />
+                <div className="form-group">
+                    <label htmlFor="fullname">Full Name:</label>
+                    <input
+                        type="text"
+                        id="fullname"
+                        name="fullname"
+                        value={formData.fullname}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
-
-                <div className='form-group'>
-                    <label htmlFor="dob">Date of Birth:</label>
-                    <input type="date" id="dob" name="dob" required />
+                <div className="form-group">
+                    <label htmlFor="phonenumber">Phone Number:</label>
+                    <input
+                        type="tel"
+                        id="phonenumber"
+                        name="phonenumber"
+                        value={formData.phonenumber}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
-
-                <div className='form-group'>
-                    <label>Gender:</label>
-                    <div>
-                        <input type="radio" id="male" name="gender" value="male" required />
-                        <label htmlFor="male">Male</label>
-
-                        <input type="radio" id="female" name="gender" value="female" />
-                        <label htmlFor="female">Female</label>
-
-                        <input type="radio" id="other" name="gender" value="other" />
-                        <label htmlFor="other">Other</label>
-                    </div>
+                <div className="form-group">
+                    <label htmlFor="dateofbirth">Date of Birth:</label>
+                    <input
+                        type="date"
+                        id="dateofbirth"
+                        name="dateofbirth"
+                        value={formData.dateofbirth}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
-
-                <div className='form-group'>
-                    <label htmlFor="address">Address:</label>
-                    <textarea id="address" name="address" rows="3" required></textarea>
-                </div>
-
-                <div className='form-group'>
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" name="password" required />
-                </div>
-
-                <div className='form-group'>
-                    <label htmlFor="confirmPassword">Confirm Password:</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" required />
-                </div>
-
-                <div className='form-group'>
-                    <label htmlFor="role">Role:</label>
-                    <select id="role" name="role" required>
-                        <option value="">Select Role</option>
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
+                <div className="form-group">
+                    <label htmlFor="gender">Gender:</label>
+                    <select
+                        id="gender"
+                        name="gender"
+                        value={formData.gender}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
-
-                <button type="submit">Signup</button>
-                <p>Already have an account? <a href='http://localhost:5173/login'>Login</a></p>
+                <div className="form-group">
+                    <label htmlFor="address">Address:</label>
+                    <textarea
+                        id="address"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <button 
+                    type="submit" 
+                    className="signup-button"
+                    disabled={loading}
+                >
+                    {loading ? 'Signing up...' : 'Sign Up'}
+                </button>
             </form>
+            <p>Already have an account? <a href="/login">Login</a></p>
         </div>
     );
 };

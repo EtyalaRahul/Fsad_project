@@ -1,71 +1,98 @@
 /* Container */
-.signup {
-  width: 400px;
-  margin: 50px auto;
-  padding: 30px;
-  border-radius: 12px;
-  background-color: #f9f9f9;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.signup-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Title */
-.signup h1 {
-  text-align: center;
-  margin-bottom: 25px;
-  color: #333;
+.signup-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Form */
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 /* Form groups */
 .form-group {
-  margin-bottom: 15px;
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 /* Labels */
 .form-group label {
-  margin-bottom: 5px;
-  font-weight: 600;
-  color: #333;
+    font-weight: 500;
+    color: #555;
 }
 
 /* Inputs */
 .form-group input,
 .form-group select,
 .form-group textarea {
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  transition: border-color 0.3s;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
 }
 
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  border-color: #4a90e2;
-  outline: none;
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
 }
 
-/* Gender radio buttons */
-.form-group input[type="radio"] {
-  margin-right: 5px;
-  margin-left: 10px;
+/* Error message */
+.error-message {
+    background-color: #fff3f3;
+    color: #dc3545;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #ffcdd2;
 }
 
 /* Submit button */
-button[type="submit"] {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  background-color: #4a90e2;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.signup-button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.2s;
 }
 
-button[type="submit"]:hover {
-  background-color: #357ac8;
+.signup-button:hover {
+    background-color: #0056b3;
+}
+
+.signup-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Login link */
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
 }
